@@ -1,0 +1,27 @@
+{
+    "name": "coluo/aliyun-php-sdk-core",
+    "type": "library",
+    "description": "Aliyun PHP SDK Core",
+    "version": "0.2.0",
+    "license": "MIT",
+    "homepage": "https://www.aliyun.com",
+    "authors": [
+        {
+            "name": "Coluo",
+            "email": "coluo@126.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "files": ["src/Config.php"]
+    },
+    
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
