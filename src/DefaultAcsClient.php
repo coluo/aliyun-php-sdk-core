@@ -21,13 +21,11 @@ class DefaultAcsClient implements IAcsClient
 {
     public $iClientProfile;
     public $__urlTestFlag__;
-    private $locationService;
     
     public function __construct($iClientProfile)
     {
         $this->iClientProfile = $iClientProfile;
         $this->__urlTestFlag__ = false;
-        $this->locationService = new LocationService($this->iClientProfile);
     }
     
     public function getAcsResponse($request, $iSigner = null, $credential = null, $autoRetry = true, $maxRetryNumber = 3)
@@ -53,18 +51,7 @@ class DefaultAcsClient implements IAcsClient
             $credential = $this->iClientProfile->getCredential();
         }
         $request = $this->prepareRequest($request);
-
-        // Get the domain from the Location Service by speicified `ServiceCode` and `RegionId`.
-        $domain = null;
-        if (null != $request->getLocationServiceCode())
-        {
-            $domain = $this->locationService->findProductDomain($request->getRegionId(), $request->getLocationServiceCode(), $request->getLocationEndpointType(), $request->getProduct());
-        }       
-        if ($domain == null)
-        {
-            $domain = EndpointProvider::findProductDomain($request->getRegionId(), $request->getProduct());
-        }
-
+        $domain = EndpointProvider::findProductDomain($request->getRegionId(), $request->getProduct());
         if (null == $domain) {
             throw new ClientException("Can not find endpoint to access.", "SDK.InvalidRegionId");
         }

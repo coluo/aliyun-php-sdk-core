@@ -26,9 +26,9 @@ abstract class RoaAcsRequest extends AcsRequest
     private static $headerSeparator = "\n";
     private static $querySeprator = "&";
     
-    function  __construct($product, $version, $actionName, $locationServiceCode = null, $locationEndpointType = "openAPI")
+    public function __construct($product, $version, $actionName)
     {
-        parent::__construct($product, $version, $actionName, $locationServiceCode, $locationEndpointType);
+        parent::__construct($product, $version, $actionName);
         $this->setVersion($version);
         $this->initialize();
     }
@@ -75,7 +75,8 @@ abstract class RoaAcsRequest extends AcsRequest
     
     private function prepareHeader($iSigner)
     {
-        $this->headers["Date"] = gmdate($this->dateTimeFormat);
+        date_default_timezone_set("GMT");
+        $this->headers["Date"] = date($this->dateTimeFormat);
         if (null == $this->acceptFormat) {
             $this->acceptFormat = "RAW";
         }
